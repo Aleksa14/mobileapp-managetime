@@ -11,7 +11,7 @@ import com.example.olaor.taskmanager.TaskManager.Exception.ProjectException;
 import java.util.LinkedList;
 import java.util.List;
 @Entity
-public class Project implements Parcelable {
+public class Project {
     @PrimaryKey(autoGenerate = true)
     public long id;
     private String name;
@@ -29,10 +29,7 @@ public class Project implements Parcelable {
     public Project(
             String name, String description, long startDate, long endDate,
             long estimatedTime, long minTaskDuration,
-            long maxTaskDuration, long minTimeBetweenTask, long notificationTime) /*throws Exception*/ {
-//        if (startDate > endDate){
-//            throw new ProjectException();
-//        }
+            long maxTaskDuration, long minTimeBetweenTask, long notificationTime) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -44,31 +41,6 @@ public class Project implements Parcelable {
         this.notificationTime = notificationTime;
         this.taskList = new LinkedList<>();
     }
-
-    protected Project(Parcel in) {
-        name = in.readString();
-        description = in.readString();
-        startDate = in.readLong();
-        endDate = in.readLong();
-        estimatedTime = in.readLong();
-        minTaskDuration = in.readLong();
-        maxTaskDuration = in.readLong();
-        minTimeBetweenTask = in.readLong();
-        notificationTime = in.readLong();
-        taskList = new LinkedList<>(in.createTypedArrayList(Task.CREATOR));
-    }
-
-    public static final Creator<Project> CREATOR = new Creator<Project>() {
-        @Override
-        public Project createFromParcel(Parcel in) {
-            return new Project(in);
-        }
-
-        @Override
-        public Project[] newArray(int size) {
-            return new Project[size];
-        }
-    };
 
     public String getName() {
         return name;
@@ -116,29 +88,5 @@ public class Project implements Parcelable {
 
     public void getTasksFromDb (AppDatabase db) {
         this.taskList = new LinkedList<>(db.taskDao().getTaskByProjectId(this.id));
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(description);
-        dest.writeLong(startDate);
-        dest.writeLong(endDate);
-        dest.writeLong(estimatedTime);
-        dest.writeLong(minTaskDuration);
-        dest.writeLong(maxTaskDuration);
-        dest.writeLong(minTimeBetweenTask);
-        dest.writeLong(notificationTime);
-        Parcelable[] parcelables = new Parcelable[taskList.size()];
-        int i = 0;
-        for (Task t : taskList) {
-            parcelables[i] = t;
-        }
-        dest.writeParcelableArray(parcelables, flags);
     }
 }

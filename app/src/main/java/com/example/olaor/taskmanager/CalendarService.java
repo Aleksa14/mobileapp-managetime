@@ -74,7 +74,6 @@ public class CalendarService {
                         " = ? AND " +
                         CalendarContract.Calendars.ACCOUNT_TYPE +
                         " = ? ";
-        // use the same values as above:
         String[] selArgs =
                 new String[]{
                         ACCOUNT_NAME,
@@ -100,7 +99,6 @@ public class CalendarService {
     public static void insertTasksToCalendar(Task task, Context context) {
         long calId = getCalendarId(context);
         if (calId == -1) {
-            // no calendar account; react meaningfully
             return;
         }
         Calendar cal = new GregorianCalendar();

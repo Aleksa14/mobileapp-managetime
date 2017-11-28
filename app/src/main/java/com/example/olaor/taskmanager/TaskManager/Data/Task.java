@@ -11,23 +11,11 @@ import com.example.olaor.taskmanager.TaskManager.Exception.TaskException;
 import java.util.jar.Attributes;
 
 @Entity
-public class Task implements Parcelable {
+public class Task {
 
 
     @PrimaryKey(autoGenerate = true)
     public int id;
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
-        @Override
-        public Task createFromParcel(Parcel in) {
-            return new Task(in);
-        }
-
-        @Override
-        public Task[] newArray(int size) {
-            return new Task[size];
-        }
-    };
     @ColumnInfo(name = "start_date")
     private long mStartDate;
     @ColumnInfo(name = "end_date")
@@ -48,11 +36,6 @@ public class Task implements Parcelable {
         this.mEndDate = endDate;
         this.mProjectId = projectId;
         this.mProjectName = projectName;
-    }
-
-    protected Task(Parcel in) {
-        this.mStartDate = in.readLong();
-        this.mEndDate = in.readLong();
     }
 
     public void setIdInCalendar(long idInCalendar) {
@@ -80,16 +63,5 @@ public class Task implements Parcelable {
 
     public long getProjectId() {
         return mProjectId;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(mStartDate);
-        dest.writeLong(mEndDate);
     }
 }

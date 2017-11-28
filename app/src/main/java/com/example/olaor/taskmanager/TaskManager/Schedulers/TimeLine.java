@@ -52,10 +52,6 @@ public class TimeLine implements Runnable{
                     e.printStackTrace();
                 }
             }
-//            CalendarService.createCalendar(context);
-//            for (Task t : taskList) {
-//                CalendarService.insertTasksToCalendar(t, context);
-//            }
         }
     }
 }

@@ -89,4 +89,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="apply">Apply</string>
     <string name="text">%s</string>
+    <string name="time_spent">Time spent</string>
+    <string name="time_in_hours">Time in hours</string>
+    <string name="remaining_time">Remaining time</string>
 </resources>

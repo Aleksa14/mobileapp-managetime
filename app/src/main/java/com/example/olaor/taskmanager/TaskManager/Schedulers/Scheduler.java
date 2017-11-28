@@ -10,7 +10,9 @@ import com.example.olaor.taskmanager.TaskManager.Data.Task;
 import java.util.List;
 import java.util.ListIterator;
 
-
+/**
+ *
+ */
 public class Scheduler {
 
     private Project project;
