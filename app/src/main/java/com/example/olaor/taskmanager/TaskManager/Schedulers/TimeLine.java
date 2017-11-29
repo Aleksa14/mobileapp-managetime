@@ -1,8 +1,10 @@
 package com.example.olaor.taskmanager.TaskManager.Schedulers;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.olaor.taskmanager.CalendarService;
+import com.example.olaor.taskmanager.NotificationService;
 import com.example.olaor.taskmanager.TaskManager.Data.AppDatabase;
 import com.example.olaor.taskmanager.TaskManager.Data.Project;
 import com.example.olaor.taskmanager.TaskManager.Data.Task;
@@ -51,6 +53,10 @@ public class TimeLine implements Runnable{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+            if (taskList.size() > 0) {
+                Log.i("TimeLine","Jest notyfikacja w if");
+                NotificationService.scheduleNotification(taskList.get(0), context);
             }
         }
     }

@@ -76,13 +76,11 @@ public class Scheduler {
         Task t;
         while (iterator.hasNext()) {
             t = iterator.next();
-            if (t.getStartDate() >= System.currentTimeMillis()) {
-                timeLine.remove(t);
-                iterator.remove();
-                TimeLine.db.taskDao().removeIdById(t.id);
-                int d = CalendarService.deleteTaskFromCalendar(t.getIdInCalendar(), contex);
-                Log.i("deleted id :", "" + d);
-            }
+            timeLine.remove(t);
+            iterator.remove();
+            TimeLine.db.taskDao().removeIdById(t.id);
+            int d = CalendarService.deleteTaskFromCalendar(t.getIdInCalendar(), contex);
+            Log.i("deleted id :", "" + d);
         }
     }
 }

@@ -118,6 +118,11 @@ public class ProjectElementAdapter extends ArrayAdapter<Project> {
                         callBack();
                     }
                 });
+                for (Project p : projects){
+                    if (p.getEndDate() > projects.get(i).getEndDate()){
+                        TimeLine.sheduleNewProject(p, context);
+                    }
+                }
             }
         }.start();
 
