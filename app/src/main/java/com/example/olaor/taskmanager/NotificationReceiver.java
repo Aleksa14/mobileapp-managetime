@@ -35,11 +35,11 @@ public class NotificationReceiver extends BroadcastReceiver{
                 PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 1, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.addAction(0, "Start", pendingIntent1);
 
-                Intent intent2 = new Intent();
+                Intent intent2 = new Intent(context, RescheduleActivity.class);
                 taskId = intent.getLongExtra(TASK_ID, 0);
                 intent2.putExtra(TASK_ID, taskId);
-                intent2.setAction("DISMISSED_ACTION");
-                PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 1, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+//                intent2.setAction("DISMISSED_ACTION");
+                PendingIntent pendingIntent2 = PendingIntent.getActivities(context, 1, new Intent[]{intent2}, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.addAction(0, "Reschedule", pendingIntent2);
 
                 builder.setContentTitle("New task to do");

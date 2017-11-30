@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.example.olaor.taskmanager.TaskManager.Data.AppDatabase;
 import com.example.olaor.taskmanager.TaskManager.Data.Project;
 import com.example.olaor.taskmanager.TaskManager.Data.Task;
-import com.example.olaor.taskmanager.TaskManager.Schedulers.Scheduler;
 import com.example.olaor.taskmanager.TaskManager.Schedulers.TimeLine;
 
 import java.util.ArrayList;
@@ -120,9 +119,11 @@ public class ProjectElementAdapter extends ArrayAdapter<Project> {
                 });
                 for (Project p : projects){
                     if (p.getEndDate() > projects.get(i).getEndDate()){
-                        TimeLine.sheduleNewProject(p, context);
+                        TimeLine.sheduleNewProject(p, context, System.currentTimeMillis());
                     }
                 }
+                NotificationService.clearNotification(context);
+                NotificationService.scheduleStartNotification(timeLine.get(0), context);
             }
         }.start();
 

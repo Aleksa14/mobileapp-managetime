@@ -150,7 +150,7 @@ public class AddProject extends AppCompatActivity implements View.OnClickListene
                 Log.i("info", "Project with id " + project.id + " added to db");
             }
         }.start();
-        TimeLine.sheduleNewProject(project, this);
+        TimeLine.sheduleNewProject(project, this, System.currentTimeMillis());
         Intent intent = new Intent(this, TabbedTaskManager.class);
         startActivity(intent);
 

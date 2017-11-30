@@ -27,8 +27,10 @@ public class TimeLine implements Runnable{
         this.startTime = startTime;
     }
 
-    public static void sheduleNewProject(Project project, Context context, long startTime){
-        new Thread(new TimeLine(project, context, startTime)).start();
+    public static Thread sheduleNewProject(Project project, Context context, long startTime){
+        Thread thread = new Thread(new TimeLine(project, context, startTime));
+        thread.start();
+        return thread;
     }
 
     @Override

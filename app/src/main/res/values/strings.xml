@@ -92,4 +92,6 @@
     <string name="time_spent">Time spent</string>
     <string name="time_in_hours">Time in hours</string>
     <string name="remaining_time">Remaining time</string>
+    <string name="hours">hours</string>
+    <string name="when_do_you_want_to_start_your_task">When do you want to start your task?</string>
 </resources>
