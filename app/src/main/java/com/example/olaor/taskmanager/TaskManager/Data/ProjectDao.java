@@ -16,6 +16,9 @@ public interface ProjectDao {
     @Query("SELECT * FROM project ORDER BY endDate")
     List<Project> getAllProject();
 
+    @Query("SELECT * FROM project WHERE id = :projectId")
+    Project getProjectById(long projectId);
+
     @Query("DELETE FROM project")
     void removeAllProject();
 

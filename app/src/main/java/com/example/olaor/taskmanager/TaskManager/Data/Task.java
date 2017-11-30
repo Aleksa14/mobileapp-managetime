@@ -15,7 +15,7 @@ public class Task {
 
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public long id;
     @ColumnInfo(name = "start_date")
     private long mStartDate;
     @ColumnInfo(name = "end_date")

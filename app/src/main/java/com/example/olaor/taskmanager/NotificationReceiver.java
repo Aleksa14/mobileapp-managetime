@@ -11,21 +11,52 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 
-import com.example.olaor.taskmanager.TaskManager.Data.Task;
-
 public class NotificationReceiver extends BroadcastReceiver{
+
+    public static final String ACTION_KEY = "ACTION_KEY";
+    public static final String ACTION_START_TASK = "ACTION_START_TASK";
+    public static final String ACTION_END_TASK = "ACTION_END_TASK";
+    public static final String TASK_ID = "TASK_ID";
+    private long taskId;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, TabbedTaskManager.class), 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-
-        builder.setContentTitle("New task to do");
-        builder.setContentText("You have to start your task soon");
         builder.setSmallIcon(R.drawable.ic_notifications_black_24dp);
-        builder.setContentIntent(pendingIntent);
+
+        switch (intent.getStringExtra(ACTION_KEY)){
+            case ACTION_START_TASK:
+                Intent intent1 = new Intent();
+                taskId = intent.getLongExtra(TASK_ID, 0);
+                intent1.putExtra(TASK_ID, taskId);
+                intent1.setAction("START_ACTION");
+                PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 1, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.addAction(0, "Start", pendingIntent1);
+
+                Intent intent2 = new Intent();
+                taskId = intent.getLongExtra(TASK_ID, 0);
+                intent2.putExtra(TASK_ID, taskId);
+                intent2.setAction("DISMISSED_ACTION");
+                PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 1, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.addAction(0, "Reschedule", pendingIntent2);
+
+                builder.setContentTitle("New task to do");
+                builder.setContentText("You have to start your task soon");
+
+                break;
+            case ACTION_END_TASK:
+                Intent intent3 = new Intent(context, LoggingActivity.class);
+                PendingIntent pendingIntent3 = PendingIntent.getActivities(context, 0, new Intent[]{intent3}, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.addAction(0, "Log the work", pendingIntent3);
+
+                builder.setContentTitle("Task ended!");
+                builder.setContentText("Log your work time.");
+
+                break;
+        }
+
 
         Notification n = builder.build();
 

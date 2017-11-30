@@ -21,16 +21,17 @@ public class Scheduler {
         this.project = project;
     }
 
-    public void schedule(List<Task> taskList, Context context) throws Exception {
+    public void schedule(List<Task> taskList, Context context, long startFrom) throws Exception {
         ListIterator<Task> iterator = taskList.listIterator();
         long spentTime = 0L;
         Task previousTask = null;
         Task nextTask = null;
         Task projectTask = null;
+        long startTime = Math.max(project.getStartDate(), startFrom);
         while (iterator.hasNext() && spentTime <= project.getEstimatedTime()) {
             previousTask = nextTask;
             nextTask = iterator.next();
-            long startNewTaskTime = previousTask == null ? project.getStartDate() : previousTask.getEndDate();
+            long startNewTaskTime = previousTask == null ? startTime : previousTask.getEndDate();
             long endNewTaskTime = nextTask.getStartDate();
             if (projectTask != null) {
                 startNewTaskTime = Math.max(startNewTaskTime, projectTask.getEndDate() + project.getMinTimeBetweenTask());
@@ -50,7 +51,7 @@ public class Scheduler {
             projectTask = newTask;
         }
         while (spentTime < project.getEstimatedTime()) {
-            long startNewTaskTime = taskList.size() == 0 ? project.getStartDate() : taskList.get(taskList.size() - 1).getEndDate();
+            long startNewTaskTime = taskList.size() == 0 ? startTime : taskList.get(taskList.size() - 1).getEndDate();
             if (projectTask != null) {
                 startNewTaskTime = Math.max(startNewTaskTime, projectTask.getEndDate() + project.getMinTimeBetweenTask());
             }
@@ -67,8 +68,9 @@ public class Scheduler {
     private void addToDbCalendar(Task task, Context context) {
         CalendarService.createCalendar(context);
         CalendarService.insertTasksToCalendar(task, context);
-        TimeLine.db.taskDao().addTask(task);
-
+        task.id = TimeLine.db.taskDao().addTask(task);
+        Log.i("addToDbCalendar", "Added task with id: " + task.id +
+                " to project with id: " + task.getProjectId());
     }
 
     public void clearProject(List<Task> timeLine, Context contex) {
