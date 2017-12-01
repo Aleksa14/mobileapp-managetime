@@ -38,7 +38,6 @@ public class NotificationReceiver extends BroadcastReceiver{
                 Intent intent2 = new Intent(context, RescheduleActivity.class);
                 taskId = intent.getLongExtra(TASK_ID, 0);
                 intent2.putExtra(TASK_ID, taskId);
-//                intent2.setAction("DISMISSED_ACTION");
                 PendingIntent pendingIntent2 = PendingIntent.getActivities(context, 1, new Intent[]{intent2}, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.addAction(0, "Reschedule", pendingIntent2);
 
@@ -48,6 +47,8 @@ public class NotificationReceiver extends BroadcastReceiver{
                 break;
             case ACTION_END_TASK:
                 Intent intent3 = new Intent(context, LoggingActivity.class);
+                taskId = intent.getLongExtra(TASK_ID, 0);
+                intent3.putExtra(TASK_ID, taskId);
                 PendingIntent pendingIntent3 = PendingIntent.getActivities(context, 0, new Intent[]{intent3}, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.addAction(0, "Log the work", pendingIntent3);
 

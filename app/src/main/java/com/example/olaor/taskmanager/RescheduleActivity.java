@@ -59,7 +59,7 @@ public class RescheduleActivity extends AppCompatActivity{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                NotificationService.scheduleStartNotification(p.getTaskList().get(0), getApplicationContext());
+                //NotificationService.scheduleStartNotification(p.getTaskList().get(0), getApplicationContext());
             }
         }.start();
     }

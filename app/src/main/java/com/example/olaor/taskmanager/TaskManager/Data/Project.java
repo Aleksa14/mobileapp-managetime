@@ -62,6 +62,10 @@ public class Project {
         return estimatedTime;
     }
 
+    public void setEstimatedTime(long estimatedTime) {
+        this.estimatedTime = estimatedTime;
+    }
+
     public long getMinTaskDuration() {
         return minTaskDuration;
     }
